@@ -1,0 +1,8 @@
+.env
+venv
+client_secret.json
+token.json
+downloads/original/*
+downloads/pasta_csv/*
+downloads/pasta_xlsx/*
+results/*
