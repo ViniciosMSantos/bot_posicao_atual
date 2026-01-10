@@ -10,7 +10,7 @@ ${URL}                     https://app.une.digital/_login/Login.aspx?ReturnUrl=%
 ${DIRETORIO_DOWNLOAD}      ${CURDIR}\\downloads\\original
 ${DIRETORIO_SALVAR}        ${CURDIR}\\downloads\\pasta_xlsx
 ${DIRETORIO_ATUAL}         ${CURDIR}
-${TEMPO_ESPERA}            20s
+${TEMPO_ESPERA}            100s
 ${ID_ARQUIVO}              1g-e2IkWN6fEFgDStWO1KJ75JYrpvKwEKGu0IQEUPXJI
 ${ABA_ARQUIVO}             BHub
 ${NOME_ARQUIVO}            Une
@@ -41,28 +41,40 @@ Abrir Navegador E Fazer Login
     Prepara Firefox Com Pasta de Download    ${URL}    ${DIRETORIO_DOWNLOAD}
     Maximize Browser Window
     Wait Until Element Is Visible    id=email    ${TEMPO_ESPERA}
+    Wait Until Element Is Enabled    id=email    ${TEMPO_ESPERA}
     Input Text    id=email    ${email}
     Input Text    id=password    ${senha}
     Click Button    id=btnEntrar
-    Sleep   10s
-    
+
+
+Fechar Modais
+    Run Keyword And Ignore Error
+    ...    Click Element    xpath=//button[text()='Vamos nessa!']
+
+    Run Keyword And Ignore Error
+    ...    Click Element    xpath=//a[contains(@class, 'pliq-btn-full-screen')]
+
+    Run Keyword And Ignore Error
+    ...    Click Element    xpath=//div[@id="novidadeCadastroEmpresa"]//button[@class="close"]
+
+    Run Keyword And Ignore Error
+    ...    Click Element    xpath=//div[@id="novidadeProgramaIndicacao"]//button[@class="close"]
+
+
 Verificar existencia de Mensagem
-   ${modal_existe}=    Run Keyword And Return Status    Wait Until Element Is Visible    id=modalPliq    timeout=10s
-    Run Keyword If    ${modal_existe}    Click Element    xpath=//button[text()='Vamos nessa!']
-    Run Keyword If    ${modal_existe}    Click Element    xpath=//a[contains(@class, 'pliq-btn-full-screen')]
+    ${modal_apareceu}=    Run Keyword And Return Status
+    ...    Wait Until Element Is Visible    css=.modal-backdrop    30s
 
-    ${modal_2}=         Run Keyword And Return Status    Wait Until Element Is Visible    id=novidadeCadastroEmpresa    timeout=10s
-    Run Keyword If    ${modal_2}    Click Element    xpath=//div[@id="novidadeCadastroEmpresa"]//button[@class="close"]
+    Run Keyword If    ${modal_apareceu}
+    ...    Fechar Modais
 
-    ${modal_3}=         Run Keyword And Return Status    Wait Until Element Is Visible    id=novidadeProgramaIndicacao    timeout=10s
-    Run Keyword If    ${modal_3}    Click Element    xpath=//div[@id="novidadeProgramaIndicacao"]//button[@class="close"]
+    Run Keyword If    ${modal_apareceu}    Wait Until Element Is Not Visible    css=.modal-backdrop    timeout=10s
 
-    Sleep       20s
 
 Acessar Menu Empresas
+    Wait Until Element Is Visible    xpath=//a[span[contains(text(),'Posição Atual')]]    ${TEMPO_ESPERA}
+    Wait Until Element Is Enabled    xpath=//a[span[contains(text(),'Posição Atual')]]    ${TEMPO_ESPERA}
     Click Element    xpath=//a[span[contains(text(),'Posição Atual')]]
-    Wait Until Element Is Visible    id=btExportarRelatorioServicoTomado    20s
-    Sleep   10s
 
 
 Excluir Excel Antigo
@@ -71,15 +83,27 @@ Excluir Excel Antigo
     Run Keyword If      len(${arquivos}) > 0    Remove Files    ${DIRETORIO_DOWNLOAD}\\*
 
 Baixar Arquivo Atual
+    Wait Until Element Is Visible    id=btExportarRelatorioServicoTomado    ${TEMPO_ESPERA}
+    Wait Until Element Is Enabled    id=btExportarRelatorioServicoTomado    ${TEMPO_ESPERA}
+
     Click Element    id=btExportarRelatorioServicoTomado
-    Sleep    100s
+
+
+Verificar Download XLSX
+    ${xlsx}=    List Files In Directory    ${DIRETORIO_DOWNLOAD}    *.xlsx
+    ${temp}=    List Files In Directory    ${DIRETORIO_DOWNLOAD}    *.part
+    Should Be True    len(${xlsx}) == 1
+    Should Be True    len(${temp}) == 0  
+    sleep   5s
+
 
 Mover Arquivo
     [Arguments]    ${tipo}
 
-    ${arquivos}=    List Files In Directory    ${DIRETORIO_DOWNLOAD}
-    Should Be True    len(${arquivos}) == 1
+    Wait Until Keyword Succeeds    3 minutes    2s
+    ...    Verificar Download XLSX 
 
+    ${arquivos}=    List Files In Directory    ${DIRETORIO_DOWNLOAD}    *.xlsx
     ${arquivo_original}=    Set Variable    ${arquivos}[0]
 
     IF    '${tipo}' == 'atual'
@@ -94,15 +118,19 @@ Mover Arquivo
     ...    ${DIRETORIO_DOWNLOAD}\\${arquivo_original}
     ...    ${DIRETORIO_SALVAR}\\${novo_nome}
 
-
 Baixar Arquivo Antigo
     Click Element    id=linkMesAnoReferenciaAnterior
-    Sleep    15s
+    
+    Wait Until Element Is Enabled    id=btExportarRelatorioServicoTomado    ${TEMPO_ESPERA}
+    Wait Until Element Is Enabled    id=btExportarRelatorioServicoTomado    ${TEMPO_ESPERA}
+
     Click Element    id=btExportarRelatorioServicoTomado
-    Sleep    100s
 
 
 Fechar Navegador
+    Wait Until Element Is Enabled    id=btExportarRelatorioServicoTomado    ${TEMPO_ESPERA}
+    Wait Until Element Is Enabled    id=btExportarRelatorioServicoTomado    ${TEMPO_ESPERA}
+
     ${arquivos}=         List Files In Directory    ${DIRETORIO_DOWNLOAD}
     ${qtde}=             Get Length                 ${arquivos}
     Run Keyword If       ${qtde} > 0                Close Browser

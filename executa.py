@@ -6,9 +6,8 @@ import salvar_drive
 
 load_dotenv()
 
-"""contas = ['BHUB', 'WELLSCO', 'CARNEVALE', 'ASPR',
-          'BLN', 'CONTJET', 'ACCORD', 'SERAC', 'PARTWORK']"""
-contas = []
+contas = ['BHUB', 'WELLSCO', 'CARNEVALE', 'ASPR', 'BR',
+          'BLN', 'CONTJET', 'ACCORD', 'SERAC', 'PARTWORK']
 
 ROBOT = "executa_bot.robot"
 

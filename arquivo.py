@@ -42,17 +42,12 @@ def concat(pasta_salvar, pasta_csv):
         resultado['Número NFe'].astype(str)
     )
 
-    resultado_nv = resultado.drop_duplicates(
-        subset=['Id'],
-        keep='last'
-    )
-
     # Criar pasta do CSV se não existir
     pasta_csv.mkdir(parents=True, exist_ok=True)
 
     # Salvar CSV
     caminho_csv = pasta_csv / "Unecont_celula_de_entrada.csv"
-    resultado_nv.to_csv(caminho_csv, index=False, encoding="utf-8-sig")
+    resultado.to_csv(caminho_csv, index=False, encoding="utf-8-sig")
 
     # Limpar pasta de origem
     arquivos_csv = list(Path(pasta_salvar).glob('*'))
