@@ -10,7 +10,7 @@ ${URL}                     https://app.une.digital/_login/Login.aspx?ReturnUrl=%
 ${DIRETORIO_DOWNLOAD}      ${CURDIR}\\downloads\\original
 ${DIRETORIO_SALVAR}        ${CURDIR}\\downloads\\pasta_xlsx
 ${DIRETORIO_ATUAL}         ${CURDIR}
-${TEMPO_ESPERA}            100s
+${TEMPO_ESPERA}            200s
 ${ID_ARQUIVO}              1g-e2IkWN6fEFgDStWO1KJ75JYrpvKwEKGu0IQEUPXJI
 ${ABA_ARQUIVO}             BHub
 ${NOME_ARQUIVO}            Une
@@ -48,6 +48,8 @@ Abrir Navegador E Fazer Login
 
 
 Fechar Modais
+
+    # Tenta fechar via botão
     Run Keyword And Ignore Error
     ...    Click Element    xpath=//button[text()='Vamos nessa!']
 
@@ -56,19 +58,30 @@ Fechar Modais
 
     Run Keyword And Ignore Error
     ...    Click Element    xpath=//div[@id="novidadeCadastroEmpresa"]//button[@class="close"]
-
+    
     Run Keyword And Ignore Error
     ...    Click Element    xpath=//div[@id="novidadeProgramaIndicacao"]//button[@class="close"]
 
+    # Força o fechamento via JS caso o botão falhe
+    Run Keyword And Ignore Error    Execute Javascript    try { document.getElementById('novidadeProgramaIndicacao').style.display='none'; } catch(e) {}
+    Run Keyword And Ignore Error    Execute Javascript    try { document.getElementById('novidadeCadastroEmpresa').style.display='none'; } catch(e) {}
+    Run Keyword And Ignore Error    Execute Javascript    try { document.querySelectorAll('.modal-backdrop').forEach(el => el.remove()); } catch(e) {}
+    Run Keyword And Ignore Error    Execute Javascript    try { document.body.classList.remove('modal-open'); } catch(e) {}
+
 
 Verificar existencia de Mensagem
+    # Verifica se existe backdrop OU o modal específico bloqueando
     ${modal_apareceu}=    Run Keyword And Return Status
-    ...    Wait Until Element Is Visible    css=.modal-backdrop    30s
+    ...    Wait Until Keyword Succeeds    5s    1s    Element Should Be Visible    css=.modal-backdrop
+    
+    ${modal_indicacao}=   Run Keyword And Return Status
+    ...    Wait Until Keyword Succeeds    5s    1s    Element Should Be Visible    id=novidadeProgramaIndicacao
 
-    Run Keyword If    ${modal_apareceu}
+    Run Keyword If    ${modal_apareceu} or ${modal_indicacao}
     ...    Fechar Modais
 
-    Run Keyword If    ${modal_apareceu}    Wait Until Element Is Not Visible    css=.modal-backdrop    ${TEMPO_ESPERA}
+    # Garante que NÃO existe backdrop
+    Wait Until Keyword Succeeds    ${TEMPO_ESPERA}    5s    Page Should Not Contain Element    css=.modal-backdrop
 
 
 Acessar Menu Empresas
