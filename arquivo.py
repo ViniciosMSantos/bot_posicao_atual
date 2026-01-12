@@ -53,3 +53,9 @@ def concat(pasta_salvar, pasta_csv):
     arquivos_csv = list(Path(pasta_salvar).glob('*'))
     for arquivo in arquivos_csv:
         arquivo.unlink()
+
+def excluir_log(caminho_log):
+    pasta_log = Path(caminho_log)
+    arquivos_log = list(pasta_log.glob('*.log'))
+    for arquivo in arquivos_log:
+        arquivo.unlink()

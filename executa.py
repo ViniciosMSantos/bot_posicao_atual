@@ -9,6 +9,7 @@ load_dotenv()
 contas = ['BHUB', 'WELLSCO', 'CARNEVALE', 'ASPR', 'BR',
           'BLN', 'CONTJET', 'ACCORD', 'SERAC', 'PARTWORK']
 
+
 ROBOT = "executa_bot.robot"
 
 try:
@@ -36,6 +37,8 @@ try:
     salvar_drive.arquivo_drive(
         id_pasta_drive=os.getenv("ID_PASTA_DRIVE"),
         arquivo="downloads/pasta_csv/Unecont_celula_de_entrada.csv")
+
+    arquivo.excluir_log("results")
 
 except subprocess.CalledProcessError as e:
     print(f"Erro ao executar o robô: {e}")
