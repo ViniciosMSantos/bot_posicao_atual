@@ -34,7 +34,6 @@ Baixar Arquivo Excel Da Plataforma
     Baixar Arquivo Antigo
     Mover Arquivo    anterior
     Fechar Navegador
-    Excluir arquivo .log
     
 
 *** Keywords ***
@@ -135,10 +134,6 @@ Fechar Navegador
     ${arquivos}=         List Files In Directory    ${DIRETORIO_DOWNLOAD}
     ${qtde}=             Get Length                 ${arquivos}
     Run Keyword If       ${qtde} > 0                Close Browser
-
-Excluir arquivo .log
-    ${arquivos_log}=    List Files In Directory    ${DIRETORIO_LOG}   pattern=*.log
-    Run Keyword If    len(${arquivos_log}) > 0    Remove Files    ${DIRETORIO_LOG}\\*.log
 
 Prepara Firefox Com Pasta de Download
     [Arguments]    ${URL}    ${DOWNLOAD_FOLDER}
