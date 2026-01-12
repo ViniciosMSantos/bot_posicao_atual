@@ -15,11 +15,11 @@ ${ID_ARQUIVO}              1g-e2IkWN6fEFgDStWO1KJ75JYrpvKwEKGu0IQEUPXJI
 ${ABA_ARQUIVO}             BHub
 ${NOME_ARQUIVO}            Une
 ${NOME_BASE}               Unecont BHUB
-${DIR_EXC}                 ${CURDIR}\\results
 ${ID_PASTA}                1dW_hbVck2PgstOpDIZy4g5mnJ0cYGzXD
 ${email}                   ${EMAIL}
 ${senha}                   ${SENHA}
 ${conta}                   ${CONTA}
+${DIRETORIO_LOG}           ${CURDIR}\\results
 
 *** Tasks ***
 Baixar Arquivo Excel Da Plataforma
@@ -34,6 +34,7 @@ Baixar Arquivo Excel Da Plataforma
     Baixar Arquivo Antigo
     Mover Arquivo    anterior
     Fechar Navegador
+    Excluir arquivo .log
     
 
 *** Keywords ***
@@ -68,7 +69,7 @@ Verificar existencia de Mensagem
     Run Keyword If    ${modal_apareceu}
     ...    Fechar Modais
 
-    Run Keyword If    ${modal_apareceu}    Wait Until Element Is Not Visible    css=.modal-backdrop    timeout=10s
+    Run Keyword If    ${modal_apareceu}    Wait Until Element Is Not Visible    css=.modal-backdrop    ${TEMPO_ESPERA}
 
 
 Acessar Menu Empresas
@@ -135,6 +136,9 @@ Fechar Navegador
     ${qtde}=             Get Length                 ${arquivos}
     Run Keyword If       ${qtde} > 0                Close Browser
 
+Excluir arquivo .log
+    ${arquivos_log}=    List Files In Directory    ${DIRETORIO_LOG}   pattern=*.log
+    Run Keyword If    len(${arquivos_log}) > 0    Remove Files    ${DIRETORIO_LOG}\\*.log
 
 Prepara Firefox Com Pasta de Download
     [Arguments]    ${URL}    ${DOWNLOAD_FOLDER}

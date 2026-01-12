@@ -12,6 +12,7 @@ contas = ['BHUB', 'WELLSCO', 'CARNEVALE', 'ASPR', 'BR',
 ROBOT = "executa_bot.robot"
 
 try:
+    
     for conta in contas:
         email = os.getenv(f"EMAIL_UNECONT_{conta}")
         senha = os.getenv(f"SENHA_UNECONT_{conta}")
