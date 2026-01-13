@@ -10,6 +10,8 @@ contas = ['BHUB', 'WELLSCO', 'CARNEVALE', 'ASPR', 'BR',
           'BLN', 'CONTJET', 'ACCORD', 'SERAC', 'PARTWORK',
           'CTZ', 'MANGINI', 'QUALITY', 'SAOLUCAS', 'VALOR', 'VERSAO2']
 
+contas = [ 'SAOLUCAS', 'VALOR', 'VERSAO2']
+
 
 ROBOT = "executa_bot.robot"
 
@@ -21,14 +23,28 @@ try:
 
         print(f"Executando extração Unecont - conta {conta}")
 
-        subprocess.run([
-            "robot",
-            "-d", f"results",
-            "-v", f"EMAIL:{email}",
-            "-v", f"SENHA:{senha}",
-            "-v", f"CONTA:{conta}",
-            ROBOT
-        ], check=True)
+        tentativas = 0
+        max_tentativas = 3
+
+        while tentativas < max_tentativas:
+            try:
+                subprocess.run([
+                    "robot",
+                    "-d", f"results",
+                    "-v", f"EMAIL:{email}",
+                    "-v", f"SENHA:{senha}",
+                    "-v", f"CONTA:{conta}",
+                    ROBOT
+                ], check=True)
+
+                break
+            
+            except subprocess.CalledProcessError as e:
+                print(f"Erro ao executar o robô: {e}")
+                tentativas += 1
+
+                if tentativas == max_tentativas:
+                    raise e
 
     arquivo.concat(
         pasta_salvar="downloads/pasta_xlsx",
