@@ -5,7 +5,7 @@ echo Atualizando codigo do repositorio Git...
 echo ========================================
 
 REM Muda para o diretório do script .bat (onde os .robot estão)
-cd /d "C:\Users\vinicios.santos_bhub\Desktop\Projetos\bot_posicao_atual"
+cd /d "%~dp0"
 
 REM Atualiza o código do repositório Git
 echo.
