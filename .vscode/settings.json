@@ -1,0 +1,13 @@
+{
+    "sqltools.connections": [
+        {
+            "connectionMethod": "Hostname and Token",
+            "catalog": "bhub_lakehouse_prd",
+            "previewLimit": 50,
+            "driver": "Databricks",
+            "name": "Databricks",
+            "host": "dbc-177f9956-7c2a.cloud.databricks.com",
+            "path": "/sql/1.0/warehouses/5d00e9d22e118a4e"
+        }
+    ]
+}
