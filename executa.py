@@ -10,8 +10,6 @@ contas = ['BHUB', 'WELLSCO', 'CARNEVALE', 'ASPR', 'BR',
           'BLN', 'CONTJET', 'ACCORD', 'SERAC', 'PARTWORK',
           'CTZ', 'MANGINI', 'QUALITY', 'SAOLUCAS', 'VALOR', 'VERSAO2']
 
-contas = [ 'SAOLUCAS', 'VALOR', 'VERSAO2']
-
 
 ROBOT = "executa_bot.robot"
 

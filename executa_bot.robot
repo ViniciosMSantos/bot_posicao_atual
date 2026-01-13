@@ -30,9 +30,9 @@ Baixar Arquivo Excel Da Plataforma
     Excluir Excel Antigo    ${DIRETORIO_DOWNLOAD}
     Baixar Arquivo Atual
     Mover Arquivo    atual
-    Excluir Excel Antigo    ${DIRETORIO_DOWNLOAD}
-    Baixar Arquivo Antigo
-    Mover Arquivo    anterior
+    #Excluir Excel Antigo    ${DIRETORIO_DOWNLOAD}
+    #Baixar Arquivo Antigo
+    #Mover Arquivo    anterior
     Fechar Navegador
     
 
