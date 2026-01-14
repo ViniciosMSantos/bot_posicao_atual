@@ -8,7 +8,8 @@ load_dotenv()
 
 contas = ['BHUB', 'WELLSCO', 'CARNEVALE', 'ASPR', 'BR',
           'BLN', 'CONTJET', 'ACCORD', 'SERAC', 'PARTWORK',
-          'CTZ', 'MANGINI', 'QUALITY', 'SAOLUCAS', 'VALOR', 'VERSAO2']
+          'CTZ', 'MANGINI', 'QUALITY', 'SAOLUCAS', 'VALOR', 
+          'VERSAO2', 'EFFORTS']
 
 
 ROBOT = "executa_bot.robot"
