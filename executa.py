@@ -11,7 +11,6 @@ contas = ['BHUB', 'WELLSCO', 'CARNEVALE', 'ASPR', 'BR',
           'CTZ', 'MANGINI', 'QUALITY', 'SAOLUCAS', 'VALOR', 
           'VERSAO2', 'EFFORTS']
 
-
 ROBOT = "executa_bot.robot"
 
 try:

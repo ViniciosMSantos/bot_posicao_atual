@@ -18,9 +18,7 @@ def concat(pasta_salvar, pasta_csv):
 
         df['CNPJ Empresa'] = (
             df['CNPJ Empresa']
-            .astype(str)
-            .str.replace(r'[./-]', '', regex=True)
-        )
+            .astype(str))
 
         df = df.fillna("")
         lista_df.append(df)
@@ -34,12 +32,6 @@ def concat(pasta_salvar, pasta_csv):
     # Data e hora
     resultado['Data_do_download'] = datetime.now().strftime(
         '%Y-%m-%d %H:%M:%S'
-    )
-
-    # Criar Id
-    resultado['Id'] = (
-        resultado['CNPJ Empresa'].astype(str) +
-        resultado['Número NFe'].astype(str)
     )
 
     # Criar pasta do CSV se não existir

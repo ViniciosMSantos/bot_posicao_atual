@@ -72,10 +72,10 @@ Fechar Modais
 Verificar existencia de Mensagem
     # Verifica se existe backdrop OU o modal específico bloqueando
     ${modal_apareceu}=    Run Keyword And Return Status
-    ...    Wait Until Keyword Succeeds    5s    1s    Element Should Be Visible    css=.modal-backdrop
+    ...    Wait Until Keyword Succeeds    10s    1s    Element Should Be Visible    css=.modal-backdrop
     
     ${modal_indicacao}=   Run Keyword And Return Status
-    ...    Wait Until Keyword Succeeds    5s    1s    Element Should Be Visible    id=novidadeProgramaIndicacao
+    ...    Wait Until Keyword Succeeds    10s    1s    Element Should Be Visible    id=novidadeProgramaIndicacao
 
     Run Keyword If    ${modal_apareceu} or ${modal_indicacao}
     ...    Fechar Modais
